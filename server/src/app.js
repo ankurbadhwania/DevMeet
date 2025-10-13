@@ -8,7 +8,7 @@ app.post("/signup", async (req, res) => {
     const user = new User(req.body);
     try{
         await user.save();
-    res.send("new user added");
+        res.send("new user added");
     }
     catch(err){
         res.status(400).send("error user not saved: " + err.message);
@@ -41,6 +41,36 @@ app.get("/feed", async (req, res) => {
         res.status(400).send("something went wrong");
     }
     
+})
+app.delete("/user", async(req, res) =>{
+    try{
+        const id = req.body.id;
+        const user =  await User.findByIdAndDelete(id);
+        if (!user) {
+            res.status(404).send("User not found");
+        }
+        else{
+            res.send("user deleted successfully");
+        }
+    }
+    catch(err){
+        res.send("something went wrong");
+    }
+})
+
+app.patch("/user", async (req, res) => {
+    const userId = req.body.id;
+    const data = req.body;
+    try{    
+        const user = await User.findByIdAndUpdate(userId, data, {
+            // returnDocument : "after",  // to return new updated user
+            // runValidators : true,
+        });
+        res.send("user updated")
+    }
+    catch(err){
+        res.status(400).send("update failed" + err.message);
+    }
 })
 
 connectDB().then(()=> {
