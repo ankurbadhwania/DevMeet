@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
     },
     about : {
         type : String,
-        default : "deafult description of the user",
+        default : "default description of the user",
     }
 }, {
     timestamps : true,

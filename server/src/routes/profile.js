@@ -41,11 +41,14 @@ profileRouter.patch("/profile/forgotpassword", async (req, res) => {
     try{
         const {email, password} = req.body;
         const user = await User.findOne({email});
-        if(user){
-            if(isStrongPassword(password)) user.password = await bcrypt.hash(password, 10);
+        if(!user){
+            return res.status(404).send("user not found");
         }
         else{
-            throw new Error("incorrect email address");
+            if(isStrongPassword(password)) user.password = await bcrypt.hash(password, 10);
+            else{
+                return res.status(400).send("enter strong password");
+            }
         }
         await user.save();
         res.send("password updated successfully");
