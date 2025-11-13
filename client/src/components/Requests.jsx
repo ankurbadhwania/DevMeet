@@ -11,14 +11,14 @@ const Requests = () => {
 
   const reviewRequest = async (status, _id) => {
     try {
-      const res = await axios.post(
-        BASE_URL + "/request/review/" +  status  + "/" + _id,
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
         {},
         {
           withCredentials: true,
         }
       );
-      dispatch(removeRequest(_id))
+      dispatch(removeRequest(_id));
     } catch (err) {
       console.error(err.message);
     }
@@ -74,7 +74,7 @@ const Requests = () => {
                 className="px-4 py-2 rounded-lg font-semibold 
               text-white bg-red-500 hover:bg-red-600 active:bg-red-700 
               shadow-md hover:shadow-lg transition"
-              onClick={() => reviewRequest("rejected", request._id)}
+                onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
@@ -82,7 +82,7 @@ const Requests = () => {
                 className="px-4 py-2 rounded-lg font-semibold 
                 text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 
                 shadow-md hover:shadow-lg transition"
-                onClick={() => reviewRequest("accepted",request._id)}
+                onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept
               </button>
