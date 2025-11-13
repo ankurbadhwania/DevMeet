@@ -11,7 +11,7 @@ userRouter.get("/request/received", userAuth, async (req, res) => {
         const connectionRequests = await ConnectionRequest.find({
             toUserId : loggedInUser._id,
             status : "interested",
-        }).populate("fromUserId", ["firstName", "lastName", "photoUrl","about", "skills"]) // to get only firstname and lastname of other collection
+        }).populate("fromUserId", ["firstName", "lastName", "photoUrl","about", "skills", "gender", "age"]) // to get only firstname and lastname of other collection
         
         res.json({
             message : "data fetched successfully",
@@ -33,8 +33,8 @@ userRouter.get("/user/connection", userAuth, async (req, res) =>{
                 {fromUserId : loggedInUser._id, status : "accepted"},
             ]
         })
-        .populate("fromUserId", "firstName lastName skills about photoUrl")
-        .populate("toUserId", "firstName lastName skills about photoUrl")
+        .populate("fromUserId", "firstName lastName skills about photoUrl gender age")
+        .populate("toUserId", "firstName lastName skills about photoUrl gender age")
         const data = connections.map((conn) => {
             if(conn.fromUserId._id.toString() === loggedInUser._id.toString()){
                 return conn.toUserId;
@@ -74,7 +74,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
                 {_id : { $nin : Array.from(hideUserFromFeed)}},
                 {_id : { $ne : loggedInUser._id}}
             ]
-        }).select("firstName lastName skills about photoUrl").skip(skip).limit(limit);
+        }).select("firstName lastName skills about photoUrl gender age").skip(skip).limit(limit);
         res.json({data : users})
     }
     catch(err){
