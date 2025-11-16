@@ -13,9 +13,15 @@ const chatRouter = require("./routes/chat");
 const initializeSocket = require("./utils/socket");
 
 app.use(cors( {
-    origin : process.env.FRONTEND_URL,
+    // origin : process.env.FRONTEND_URL,
+    origin: [
+      process.env.FRONTEND_URL,
+      "https://dev-meet-blond.vercel.app"
+    ],
     credentials : true
 }));
+
+
 app.use(express.json())  // converts json from api req to js object
 app.use(cookieParser())  // middleware to read cookies
 
@@ -29,7 +35,7 @@ const server = http.createServer(app);
 initializeSocket(server);
 
 connectDB().then(()=> {
-    const port = 3000;
+    const port = process.env.PORT || 3000;
     console.log("database connected");
     server.listen(port, () => {
   console.log(`server started, listening to port ${port}`);
