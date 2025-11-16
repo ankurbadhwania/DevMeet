@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import  BASE_URL  from "../utils/constants";
+import BASE_URL from "../utils/constants";
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -68,37 +68,67 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-3/4 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col">
-      <h1 className="p-5 border-b border-gray-600">Chat</h1>
-      <div className="flex-1 overflow-scroll p-5">
-        {messages.map((msg, index) => {
-          return (
-            <div
-              key={index}
-              className={
-                "chat " +
-                (user.firstName === msg.firstName ? "chat-end" : "chat-start")
-              }
-            >
-              <div className="chat-header">
-                {`${msg.firstName}  ${msg.lastName}`}
-                {/* <time className="text-xs opacity-50"> 2 hours ago</time> */}
+    <div className="h-[calc(100vh-64px)] overflow-hidden bg-zinc-100 p-4 font-inter flex justify-center">
+      <div className="w-full max-w-2xl h-[80vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
+        <div className="px-5 py-4 border-b border-gray-200 bg-white">
+          <h1 className="text-lg font-semibold">Chat</h1>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-zinc-100 flex flex-col">
+          {messages.map((msg, index) => {
+            const mine = user.firstName === msg.firstName;
+
+            return (
+              <div
+                key={index}
+                className={`flex ${mine ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`max-w-[78%] p-3 my-2 rounded-[18px] text-sm leading-5 shadow-sm ${
+                    mine
+                      ? "bg-[#DCF8C6] text-[#303030] rounded-br-2xl"
+                      : "bg-white text-[#303030] rounded-bl-2xl"
+                  }`}
+                >
+                  <div className="break-words whitespace-pre-wrap font-semibold">
+                    {msg.text}
+                  </div>
+
+                  <div className="flex justify-between items-center mt-1 gap-16">
+                    <div className="text-[11px]">
+                      {msg.firstName} {msg.lastName}
+                    </div>
+
+                    <div className="text-[11px] text-gray-500">
+                      {/* {new Date(msg.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  })} */}
+                      {/* 11:30 */}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="chat-bubble">{msg.text}</div>
-              {/* <div className="chat-footer opacity-50">Seen</div> */}
-            </div>
-          );
-        })}
-      </div>
-      <div className="p-5 border-t border-gray-600 flex items-center gap-2">
-        <input
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className="flex-1 border border-gray-500 dark:text-white rounded p-2"
-        ></input>
-        <button onClick={sendMessage} className="btn btn-secondary">
-          Send
-        </button>
+            );
+          })}
+        </div>
+
+        <div className="px-4 py-3 border-t border-gray-200 bg-white">
+          <div className="flex items-center justify-between gap-4 border border-gray-200 rounded-full">
+            <input
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type a message..."
+              className="w-full px-4 py-3 text-sm outline-none bg-white rounded-full"
+            />
+
+            <button
+              onClick={sendMessage}
+              className="bg-green-500 text-white px-4 py-2 mr-2 rounded-full text-sm font-medium cursor-pointer"
+            >
+              Send
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
