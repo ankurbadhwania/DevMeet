@@ -1,0 +1,28 @@
+@import "tailwindcss";
+/* @plugin "daisyui"; */
+ @plugin "daisyui" {
+  themes: winter --default, night --prefersdark;
+}
+.swipe-right {
+  transform: translateX(250px) rotate(25deg);
+  opacity: 0;
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swipe-left {
+  transform: translateX(-250px) rotate(-25deg);
+  opacity: 0;
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; 
+}
+
+html {
+  scrollbar-width: none;
+}
+
+
+@custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
