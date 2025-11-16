@@ -13,7 +13,7 @@ const chatRouter = require("./routes/chat");
 const initializeSocket = require("./utils/socket");
 
 app.use(cors( {
-    origin : "http://localhost:5173",
+    origin : process.env.FRONTEND_URL,
     credentials : true
 }));
 app.use(express.json())  // converts json from api req to js object

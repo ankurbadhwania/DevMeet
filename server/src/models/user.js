@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 const validator = require('validator');   // library to check email structure/strong password/url etc
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
@@ -71,7 +72,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.getJWT = async function(){
     const user = this  // this keyword works differently in arrow function
-    const token = await jwt.sign({ _id : user._id}, "DevCommunity$123", {expiresIn : "1d"});
+    const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "1d"});
     return token;
 }
 userSchema.methods.ValidatePassword = async function(passwordInputyByUser){

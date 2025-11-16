@@ -45,7 +45,7 @@ authRouter.post("/login", async (req, res) => {
         const isPasswordValid = await user.ValidatePassword(password);
 
         if(isPasswordValid){
-            // const token = await jwt.sign({ _id : user._id}, "DevCommunity$123", {expiresIn : "1d"});
+            // const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "1d"});
             const token = await user.getJWT();
             res.cookie("token", token, {expires : new Date(Date.now() + 8 * 3600000)});
             res.send(user);
