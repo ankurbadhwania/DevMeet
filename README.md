@@ -1,4 +1,6 @@
-🧑‍💻 DevMeet – Community Platform
+🧑‍💻 DevMeet – Social Connection & Real-Time Chat Platform
+
+Hosted Link:- dev-meet-blond.vercel.app/
 
 A full-stack MERN application where users can discover, connect, and chat with each other in real-time.
 Built with React, Node.js, Express, MongoDB, Socket.IO, Redux Toolkit, and deployed on Vercel + Render.
