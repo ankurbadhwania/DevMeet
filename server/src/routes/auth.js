@@ -20,7 +20,15 @@ authRouter.post("/signup", async (req, res) => {
 
         const savedUser = await user.save();
         const token = await savedUser.getJWT();
-        res.cookie("token", token, {expires : new Date(Date.now() + 8 * 3600000)});
+
+        const isProd = process.env.NODE_ENV === "production";
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 8 * 3600000),
+            secure: isProd,           
+            sameSite: isProd ? "none" : "lax",
+        });
         
         res.json({message : "user added successfully",
             data : savedUser
@@ -47,7 +55,14 @@ authRouter.post("/login", async (req, res) => {
         if(isPasswordValid){
             // const token = await jwt.sign({ _id : user._id}, process.env.JWT_SECRET, {expiresIn : "1d"});
             const token = await user.getJWT();
-            res.cookie("token", token, {expires : new Date(Date.now() + 8 * 3600000)});
+
+            const isProd = process.env.NODE_ENV === "production";
+            res.cookie("token", token, {
+                httpOnly: true,
+                expires: new Date(Date.now() + 8 * 3600000),
+                secure: isProd,           
+                sameSite: isProd ? "none" : "lax",
+            });
             res.send(user);
         }
         else{
