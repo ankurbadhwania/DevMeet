@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import NavBar from "./NavBar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import BASE_URL from "../utils/constants";
 import axios from "axios";
@@ -13,6 +13,7 @@ const Bodyy = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user);
+  const location = useLocation();
 
   const fetchUser = async () => {
     if (userData) return;
@@ -33,8 +34,10 @@ const Bodyy = () => {
   }, []);
   return (
     <>
-      <NavBar />
-        <Outlet />
+      {(() => {
+        return location.pathname === "/login" ? null : <NavBar />;
+      })()}
+      <Outlet />
       {/* <Footer /> */}
     </>
   );

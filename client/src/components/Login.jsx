@@ -48,7 +48,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex justify-center my-10">
+    <div className="flex justify-center my-30">
       <div className="fieldset bg-base-200 border-base-300 rounded-box w-xs  border p-4">
 
           <h2 className="card-title justify-center">

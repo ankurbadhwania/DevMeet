@@ -97,7 +97,7 @@ const EditProfile = ({ user }) => {
           </select>
 
           <label className="label">About</label>
-          <textarea maxlength="252"
+          <textarea maxLength ="252"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
             className="textarea textarea-bordered w-full max-w-xs resize-none "
